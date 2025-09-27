@@ -1,0 +1,48 @@
+PUBLIC PROCUREMENT NOTICE
+
+Reference Number: UK-GOV-2024-002
+Publication Date: 2024-02-01
+Contracting Authority: Department of Transport
+Address: 456 Transport House, London, UK
+
+Subject: Smart City Transportation Infrastructure
+
+Description: The Department of Transport is inviting tenders for the development of smart city transportation infrastructure including intelligent traffic management systems, electric vehicle charging networks, and integrated public transport solutions.
+
+Project Scope:
+- Installation of smart traffic lights with AI-powered optimization
+- Deployment of electric vehicle charging stations across the city
+- Integration of public transport systems with mobile applications
+- Implementation of real-time traffic monitoring and management
+- Development of sustainable transport policies
+
+Estimated Budget: £1,800,000
+
+Eligibility Criteria:
+- UK registered company or EU company with UK subsidiary
+- Minimum 3 years experience in smart city projects
+- ISO 9001 quality management certification
+- Financial turnover of at least £500,000 in the last 3 years
+- Technical expertise in IoT and smart city technologies
+- Previous experience with government contracts
+
+Submission Deadline: 2024-04-01 12:00 GMT
+
+Contact Details:
+Name: James Smith
+Email: james.smith@transport.gov.uk
+Phone: +44 20 7944 3000
+
+Project Timeline:
+- Phase 1: Planning and Design (6 months)
+- Phase 2: Implementation (12 months)
+- Phase 3: Testing and Optimization (6 months)
+- Phase 4: Maintenance and Support (24 months)
+
+Evaluation Process:
+- Technical capability (35%)
+- Financial proposal (25%)
+- Innovation and sustainability (20%)
+- Project management approach (20%)
+
+The successful bidder will be required to provide regular progress reports and maintain close communication with the project management team.

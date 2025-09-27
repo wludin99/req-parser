@@ -1,0 +1,24 @@
+{
+  "tender_reference": "UK-GOV-2024-002",
+  "publication_date": "2024-02-01",
+  "contracting_authority": {
+    "name": "Department of Transport",
+    "address": "456 Transport House, London, UK"
+  },
+  "subject": "Smart City Transportation Infrastructure",
+  "description": "The Department of Transport is inviting tenders for the development of smart city transportation infrastructure including intelligent traffic management systems, electric vehicle charging networks, and integrated public transport solutions.",
+  "estimated_budget_eur": 1800000.0,
+  "eligibility_requirements": [
+    "UK registered company or EU company with UK subsidiary",
+    "Minimum 3 years experience in smart city projects",
+    "ISO 9001 quality management certification",
+    "Financial turnover of at least £500,000 in the last 3 years",
+    "Technical expertise in IoT and smart city technologies",
+    "Previous experience with government contracts"
+  ],
+  "tender_deadline": "2024-04-01 12:00 GMT",
+  "contact": {
+    "name": "James Smith",
+    "email": "james.smith@transport.gov.uk"
+  }
+}

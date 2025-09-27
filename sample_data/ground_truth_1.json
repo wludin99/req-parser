@@ -1,0 +1,24 @@
+{
+  "tender_reference": "EU-EN-2024-001",
+  "publication_date": "2024-01-15",
+  "contracting_authority": {
+    "name": "Ministry of Energy",
+    "address": "123 Government Street, Brussels, Belgium"
+  },
+  "subject": "Development of Renewable Energy Infrastructure",
+  "description": "The Ministry of Energy is seeking proposals for the development of renewable energy infrastructure including solar and wind power installations. This project aims to increase the country's renewable energy capacity by 50% over the next five years.",
+  "estimated_budget_eur": 2500000.0,
+  "eligibility_requirements": [
+    "EU registered company",
+    "Minimum 5 years experience in renewable energy projects",
+    "ISO 14001 environmental management certification",
+    "Financial capacity of at least €1,000,000",
+    "Valid insurance coverage of at least €5,000,000",
+    "Previous experience with government contracts"
+  ],
+  "tender_deadline": "2024-03-15 17:00 CET",
+  "contact": {
+    "name": "Dr. Marie Dubois",
+    "email": "marie.dubois@ministry.gov"
+  }
+}
