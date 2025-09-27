@@ -15,6 +15,7 @@ from pathlib import Path
 
 from ..models.tender_data import TenderData
 from ..models.processing_result import ProcessingResult
+from ..utils.retry import retry_with_backoff, LLM_RETRY_CONFIG, RetryError
 
 
 class LLMExtractor:
@@ -103,6 +104,9 @@ class LLMExtractor:
         if self.config.get('huggingface', {}).get('api_key'):
             try:
                 return self._extract_with_huggingface_providers(text, ground_truth)
+            except RetryError as e:
+                print(f"Hugging Face extraction failed after all retry attempts: {e}")
+                print("Trying OpenAI as fallback...")
             except Exception as e:
                 print(f"Hugging Face extraction failed: {e}")
                 print("Trying OpenAI as fallback...")
@@ -111,6 +115,10 @@ class LLMExtractor:
         if self.openai_client:
             try:
                 return self._extract_with_openai(text, ground_truth)
+            except RetryError as e:
+                print(f"OpenAI extraction failed after all retry attempts: {e}")
+                print("Falling back to mock mode")
+                return self._extract_with_mock(text, ground_truth)
             except Exception as e:
                 print(f"OpenAI extraction failed: {e}")
                 # Check if it's a quota/billing issue
@@ -240,6 +248,7 @@ class LLMExtractor:
             print(f"Local model error: {e}")
             return self._extract_with_mock(text, ground_truth)
     
+    @retry_with_backoff(config=LLM_RETRY_CONFIG)
     def _extract_with_openai(self, text: str, ground_truth: Optional[Dict[str, Any]] = None) -> TenderData:
         """Extract data using OpenAI API."""
         if not self.openai_client:
@@ -264,6 +273,7 @@ class LLMExtractor:
         except Exception as e:
             raise Exception(f"OpenAI API error: {str(e)}")
     
+    @retry_with_backoff(config=LLM_RETRY_CONFIG)
     def _extract_with_huggingface_providers(self, text: str, ground_truth: Optional[Dict[str, Any]] = None) -> TenderData:
         """Extract data using Hugging Face Inference Providers API."""
         try:
