@@ -15,7 +15,7 @@ const mockApiService = {
   evaluateResults: jest.fn(),
 };
 
-jest.mock('../../src/services/api', () => mockApiService);
+jest.mock('../services/api', () => mockApiService);
 
 // Mock WebSocket service
 const mockWebSocketService = {

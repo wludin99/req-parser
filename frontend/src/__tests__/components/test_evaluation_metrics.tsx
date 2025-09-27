@@ -4,7 +4,7 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import EvaluationMetrics from '../../src/components/EvaluationMetrics';
+import EvaluationMetrics from '../components/EvaluationMetrics';
 
 describe('EvaluationMetrics Component', () => {
   const mockEvaluationData = {

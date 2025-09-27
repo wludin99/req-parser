@@ -68,15 +68,15 @@
 - [x] T019 [P] Document processor service in backend/src/services/document_processor.py
 - [x] T020 [P] LLM extractor service in backend/src/services/llm_extractor.py
 - [x] T021 [P] Validator service in backend/src/services/validator.py
-- [ ] T022 [P] DocumentUpload component in frontend/src/components/DocumentUpload.tsx
-- [ ] T023 [P] ExtractionResults component in frontend/src/components/ExtractionResults.tsx
-- [ ] T024 [P] EvaluationMetrics component in frontend/src/components/EvaluationMetrics.tsx
+- [x] T022 [P] DocumentUpload component in frontend/src/components/DocumentUpload.tsx
+- [x] T023 [P] ExtractionResults component in frontend/src/components/ExtractionResults.tsx
+- [x] T024 [P] EvaluationMetrics component in frontend/src/components/EvaluationMetrics.tsx
 - [x] T025 POST /extract endpoint in backend/src/api/routes.py
 - [x] T026 POST /evaluate endpoint in backend/src/api/routes.py
 - [x] T027 WebSocket connection for real-time updates in backend/src/api/routes.py
-- [ ] T028 API service integration in frontend/src/services/api.ts
-- [ ] T029 Home page component in frontend/src/pages/Home.tsx
-- [ ] T030 Results page component in frontend/src/pages/Results.tsx
+- [x] T028 API service integration in frontend/src/services/api.ts
+- [x] T029 Home page component in frontend/src/pages/Home.tsx
+- [x] T030 Results page component in frontend/src/pages/Results.tsx
 
 ## Phase 3.4: Integration
 - [ ] T031 Connect document processor to database

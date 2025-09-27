@@ -4,10 +4,10 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import ExtractionResults from '../../src/components/ExtractionResults';
+import ExtractionResults from '../components/ExtractionResults';
 
 // Mock the API service
-jest.mock('../../src/services/api', () => ({
+jest.mock('../services/api', () => ({
   getExtractionResults: jest.fn(),
   evaluateResults: jest.fn(),
 }));

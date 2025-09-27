@@ -4,16 +4,16 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import DocumentUpload from '../../src/components/DocumentUpload';
+import DocumentUpload from '../components/DocumentUpload';
 
 // Mock the API service
-jest.mock('../../src/services/api', () => ({
+jest.mock('../services/api', () => ({
   uploadDocument: jest.fn(),
   getProcessingStatus: jest.fn(),
 }));
 
 // Mock WebSocket for real-time updates
-jest.mock('../../src/services/websocket', () => ({
+jest.mock('../services/websocket', () => ({
   connect: jest.fn(),
   disconnect: jest.fn(),
   onProcessingUpdate: jest.fn(),
@@ -94,7 +94,7 @@ describe('DocumentUpload Component', () => {
   });
 
   it('handles PDF file upload successfully', async () => {
-    const { uploadDocument } = require('../../src/services/api');
+    const { uploadDocument } = require('../services/api');
     uploadDocument.mockResolvedValue({
       document_id: 'test-doc-123',
       processing_status: 'pending',
@@ -137,7 +137,7 @@ describe('DocumentUpload Component', () => {
   });
 
   it('handles text file upload successfully', async () => {
-    const { uploadDocument } = require('../../src/services/api');
+    const { uploadDocument } = require('../services/api');
     uploadDocument.mockResolvedValue({
       document_id: 'test-doc-456',
       processing_status: 'pending',
@@ -169,7 +169,7 @@ describe('DocumentUpload Component', () => {
   });
 
   it('handles upload with ground truth data', async () => {
-    const { uploadDocument } = require('../../src/services/api');
+    const { uploadDocument } = require('../services/api');
     uploadDocument.mockResolvedValue({
       document_id: 'test-doc-789',
       processing_status: 'pending',
@@ -211,7 +211,7 @@ describe('DocumentUpload Component', () => {
   });
 
   it('handles upload error', async () => {
-    const { uploadDocument } = require('../../src/services/api');
+    const { uploadDocument } = require('../services/api');
     uploadDocument.mockRejectedValue(new Error('Upload failed'));
 
     render(
@@ -286,7 +286,7 @@ describe('DocumentUpload Component', () => {
   });
 
   it('handles drag and drop file upload', async () => {
-    const { uploadDocument } = require('../../src/services/api');
+    const { uploadDocument } = require('../services/api');
     uploadDocument.mockResolvedValue({
       document_id: 'test-doc-123',
       processing_status: 'pending',
@@ -317,7 +317,7 @@ describe('DocumentUpload Component', () => {
   });
 
   it('shows processing status updates', async () => {
-    const { getProcessingStatus } = require('../../src/services/api');
+    const { getProcessingStatus } = require('../services/api');
     getProcessingStatus.mockResolvedValue({
       document_id: 'test-doc-123',
       processing_status: 'processing',
@@ -333,7 +333,7 @@ describe('DocumentUpload Component', () => {
     );
 
     // Simulate processing status update
-    const { onProcessingUpdate } = require('../../src/services/websocket');
+    const { onProcessingUpdate } = require('../services/websocket');
     onProcessingUpdate.mockImplementation((callback) => {
       callback({
         document_id: 'test-doc-123',
@@ -352,7 +352,7 @@ describe('DocumentUpload Component', () => {
   });
 
   it('resets form after successful upload', async () => {
-    const { uploadDocument } = require('../../src/services/api');
+    const { uploadDocument } = require('../services/api');
     uploadDocument.mockResolvedValue({
       document_id: 'test-doc-123',
       processing_status: 'pending',
