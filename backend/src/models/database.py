@@ -41,7 +41,7 @@ class GroundTruthData(Base):
     """Model for storing ground truth data for evaluation."""
     __tablename__ = "ground_truth_data"
     
-    document_id = Column(String(100), primary_key=True, ForeignKey("processing_results.document_id"))
+    document_id = Column(String(100), ForeignKey("processing_results.document_id"), primary_key=True)
     reference_data = Column(Text, nullable=False)
     evaluation_metrics = Column(Text, nullable=False)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)

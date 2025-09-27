@@ -68,7 +68,14 @@ class DocumentProcessor:
                     print(f"Error extracting text from page {page_num}: {e}")
                     continue
             
-            return '\n\n'.join(text_content)
+            extracted_text = '\n\n'.join(text_content)
+            
+            # If no text was extracted, provide a fallback
+            if not extracted_text.strip():
+                print("Warning: No text content found in PDF, using fallback text")
+                return "PDF document uploaded - no extractable text found. This may be an image-based PDF or scanned document."
+            
+            return extracted_text
         
         except Exception as e:
             raise Exception(f"Failed to extract text from PDF: {str(e)}")

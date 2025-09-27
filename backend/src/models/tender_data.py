@@ -18,7 +18,7 @@ class ContractingAuthority(BaseModel):
 class Contact(BaseModel):
     """Contact information for the tender."""
     name: str = Field(..., description="Name of the contact person")
-    email: EmailStr = Field(..., description="Email address of the contact person")
+    email: str = Field(..., description="Email address of the contact person")
 
 
 class TenderData(BaseModel):

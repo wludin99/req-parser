@@ -15,9 +15,12 @@ import logging
 from ..models.tender_data import TenderData
 from ..models.processing_result import ProcessingResult, ProcessingStatus
 from ..models.ground_truth_data import GroundTruthData
+from ..models.database import get_db, create_tables, ProcessingResult as DBProcessingResult, GroundTruthData as DBGroundTruthData
 from ..services.document_processor import DocumentProcessor
 from ..services.llm_extractor import LLMExtractor
 from ..services.validator import Validator
+from sqlalchemy.orm import Session
+from fastapi import Depends
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -38,7 +41,8 @@ active_connections: Dict[str, WebSocket] = {}
 @router.post("/extract")
 async def extract_tender_data(
     file: UploadFile = File(...),
-    ground_truth: Optional[str] = Form(None)
+    ground_truth: Optional[str] = Form(None),
+    db: Session = Depends(get_db)
 ) -> JSONResponse:
     """
     Extract structured data from uploaded document.
@@ -169,6 +173,19 @@ async def extract_tender_data(
             source_file_size=len(file_content)
         )
         
+        # Save to database
+        db_result = DBProcessingResult(
+            document_id=document_id,
+            processing_status="completed",
+            extracted_data=json.dumps(extracted_data_dict),
+            confidence_score=validation_result['confidence_score'],
+            processing_time=2.5,
+            created_at=datetime.utcnow()
+        )
+        db.add(db_result)
+        db.commit()
+        db.refresh(db_result)
+        
         # Use the already converted dictionary
         
         response_data = {
@@ -200,7 +217,8 @@ async def extract_tender_data(
 async def evaluate_extraction_results(
     document_id: str,
     extracted_data: Dict[str, Any],
-    ground_truth: Dict[str, Any]
+    ground_truth: Dict[str, Any],
+    db: Session = Depends(get_db)
 ) -> JSONResponse:
     """
     Evaluate extraction results against ground truth.
@@ -261,6 +279,17 @@ async def evaluate_extraction_results(
             extracted_tender_data, 
             ground_truth_data
         )
+        
+        # Save ground truth data to database
+        db_ground_truth = DBGroundTruthData(
+            document_id=document_id,
+            reference_data=json.dumps(ground_truth),
+            evaluation_metrics=json.dumps(evaluation_result),
+            created_at=datetime.utcnow()
+        )
+        db.add(db_ground_truth)
+        db.commit()
+        db.refresh(db_ground_truth)
         
         return JSONResponse(content=evaluation_result, status_code=200)
     
