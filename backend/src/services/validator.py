@@ -144,9 +144,16 @@ class Validator:
             'errors': [] if is_valid else ['Tender reference is empty']
         }
     
-    def _validate_publication_date(self, publication_date: str) -> Dict[str, Any]:
+    def _validate_publication_date(self, publication_date) -> Dict[str, Any]:
         """Validate publication date."""
-        is_valid = bool(publication_date and len(publication_date.strip()) > 0)
+        from datetime import date
+        if isinstance(publication_date, date):
+            is_valid = True
+        elif isinstance(publication_date, str):
+            is_valid = bool(publication_date and len(publication_date.strip()) > 0)
+        else:
+            is_valid = bool(publication_date)
+        
         return {
             'is_valid': is_valid,
             'score': 1.0 if is_valid else 0.0,
@@ -162,8 +169,15 @@ class Validator:
                 'errors': ['Contracting authority is missing']
             }
         
-        name_valid = bool(contracting_authority.get('name', '').strip())
-        address_valid = bool(contracting_authority.get('address', '').strip())
+        # Handle both dict and object types
+        if hasattr(contracting_authority, 'name') and hasattr(contracting_authority, 'address'):
+            # It's an object with attributes
+            name_valid = bool(contracting_authority.name and len(contracting_authority.name.strip()) > 0)
+            address_valid = bool(contracting_authority.address and len(contracting_authority.address.strip()) > 0)
+        else:
+            # It's a dictionary
+            name_valid = bool(contracting_authority.get('name', '').strip())
+            address_valid = bool(contracting_authority.get('address', '').strip())
         
         is_valid = name_valid and address_valid
         score = (1.0 if name_valid else 0.0) + (1.0 if address_valid else 0.0)
@@ -235,8 +249,15 @@ class Validator:
                 'errors': ['Contact information is missing']
             }
         
-        name_valid = bool(contact.get('name', '').strip())
-        email_valid = bool(contact.get('email', '').strip())
+        # Handle both dict and object types
+        if hasattr(contact, 'name') and hasattr(contact, 'email'):
+            # It's an object with attributes
+            name_valid = bool(contact.name and len(contact.name.strip()) > 0)
+            email_valid = bool(contact.email and len(contact.email.strip()) > 0)
+        else:
+            # It's a dictionary
+            name_valid = bool(contact.get('name', '').strip())
+            email_valid = bool(contact.get('email', '').strip())
         
         is_valid = name_valid and email_valid
         score = (1.0 if name_valid else 0.0) + (1.0 if email_valid else 0.0)
@@ -275,11 +296,19 @@ class Validator:
     
     def _get_quality_indicators(self, extracted_data: TenderData) -> Dict[str, Any]:
         """Get quality indicators for the extracted data."""
+        # Handle contact object properly
+        has_contact = False
+        if extracted_data.contact:
+            if hasattr(extracted_data.contact, 'email'):
+                has_contact = bool(extracted_data.contact.email)
+            else:
+                has_contact = bool(extracted_data.contact.get('email'))
+        
         return {
             'has_reference': bool(extracted_data.tender_reference),
             'has_budget': bool(extracted_data.estimated_budget_eur and extracted_data.estimated_budget_eur > 0),
             'has_requirements': bool(extracted_data.eligibility_requirements and len(extracted_data.eligibility_requirements) > 0),
-            'has_contact': bool(extracted_data.contact and extracted_data.contact.get('email')),
+            'has_contact': has_contact,
             'description_length': len(extracted_data.description) if extracted_data.description else 0,
             'requirements_count': len(extracted_data.eligibility_requirements) if extracted_data.eligibility_requirements else 0
         }

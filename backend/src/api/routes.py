@@ -121,6 +121,36 @@ async def extract_tender_data(
                 }
             )
         
+        # Convert TenderData to dictionary to avoid serialization issues
+        try:
+            extracted_data_dict = {
+                "tender_reference": extracted_data.tender_reference,
+                "publication_date": extracted_data.publication_date.isoformat() if extracted_data.publication_date else None,
+                "contracting_authority": {
+                    "name": extracted_data.contracting_authority.name,
+                    "address": extracted_data.contracting_authority.address
+                },
+                "subject": extracted_data.subject,
+                "description": extracted_data.description,
+                "estimated_budget_eur": extracted_data.estimated_budget_eur,
+                "eligibility_requirements": extracted_data.eligibility_requirements,
+                "tender_deadline": extracted_data.tender_deadline,
+                "contact": {
+                    "name": extracted_data.contact.name,
+                    "email": extracted_data.contact.email
+                }
+            }
+        except Exception as e:
+            logger.error(f"Data conversion failed: {e}")
+            raise HTTPException(
+                status_code=500,
+                detail={
+                    "error": "Data conversion failed",
+                    "details": str(e),
+                    "retry_count": 0
+                }
+            )
+        
         # Validate extracted data
         validation_result = validator.validate_extracted_data(extracted_data)
         
@@ -139,11 +169,12 @@ async def extract_tender_data(
             source_file_size=len(file_content)
         )
         
-        # Prepare response
+        # Use the already converted dictionary
+        
         response_data = {
             "document_id": document_id,
             "processing_status": "completed",
-            "extracted_data": extracted_data.dict(),
+            "extracted_data": extracted_data_dict,
             "confidence_score": validation_result['confidence_score'],
             "processing_time": result.processing_time,
             "evaluation_metrics": validation_result if ground_truth_data else None

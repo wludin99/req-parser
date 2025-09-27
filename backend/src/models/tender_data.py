@@ -121,9 +121,12 @@ class TenderData(BaseModel):
     @validator('tender_deadline')
     def validate_tender_deadline(cls, v):
         """Validate tender deadline format."""
-        if not v or len(v.strip()) == 0:
+        if not v:
             raise ValueError('Tender deadline cannot be empty')
-        return v.strip()
+        # If it's a string, strip it; if it's already a datetime, return as-is
+        if isinstance(v, str):
+            return v.strip()
+        return v
     
     @validator('estimated_budget_eur')
     def validate_estimated_budget(cls, v):
@@ -134,7 +137,7 @@ class TenderData(BaseModel):
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert model to dictionary."""
-        return self.dict()
+        return self.model_dump()
     
     def to_json(self) -> str:
         """Convert model to JSON string."""
@@ -143,6 +146,10 @@ class TenderData(BaseModel):
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'TenderData':
         """Create model from dictionary."""
+        # Convert date strings to date objects if needed
+        if 'publication_date' in data and isinstance(data['publication_date'], str):
+            from datetime import datetime
+            data['publication_date'] = datetime.fromisoformat(data['publication_date']).date()
         return cls(**data)
     
     @classmethod
