@@ -52,19 +52,19 @@
 
 ## Phase 3.2: Tests First (TDD) ⚠️ MUST COMPLETE BEFORE 3.3
 **CRITICAL: These tests MUST be written and MUST FAIL before ANY implementation**
-- [ ] T008 [P] Contract test POST /extract in backend/tests/contract/test_extract_api.py
-- [ ] T009 [P] Contract test POST /evaluate in backend/tests/contract/test_evaluate_api.py
-- [ ] T010 [P] Integration test document processing pipeline in backend/tests/integration/test_pipeline.py
-- [ ] T011 [P] Integration test ground truth evaluation in backend/tests/integration/test_ground_truth.py
-- [ ] T012 [P] Frontend component test DocumentUpload in frontend/tests/components/test_document_upload.tsx
-- [ ] T013 [P] Frontend component test ExtractionResults in frontend/tests/components/test_extraction_results.tsx
-- [ ] T014 [P] Frontend component test EvaluationMetrics in frontend/tests/components/test_evaluation_metrics.tsx
-- [ ] T015 [P] Frontend integration test API communication in frontend/tests/integration/test_api_integration.tsx
+- [x] T008 [P] Contract test POST /extract in backend/tests/contract/test_extract_api.py
+- [x] T009 [P] Contract test POST /evaluate in backend/tests/contract/test_evaluate_api.py
+- [x] T010 [P] Integration test document processing pipeline in backend/tests/integration/test_pipeline.py
+- [x] T011 [P] Integration test ground truth evaluation in backend/tests/integration/test_ground_truth.py
+- [x] T012 [P] Frontend component test DocumentUpload in frontend/src/__tests__/components/test_document_upload.tsx
+- [x] T013 [P] Frontend component test ExtractionResults in frontend/src/__tests__/components/test_extraction_results.tsx
+- [x] T014 [P] Frontend component test EvaluationMetrics in frontend/src/__tests__/components/test_evaluation_metrics.tsx
+- [x] T015 [P] Frontend integration test API communication in frontend/src/__tests__/integration/test_api_integration.tsx
 
 ## Phase 3.3: Core Implementation (ONLY after tests are failing)
-- [ ] T016 [P] TenderData model in backend/src/models/tender_data.py
-- [ ] T017 [P] ProcessingResult model in backend/src/models/processing_result.py
-- [ ] T018 [P] GroundTruthData model in backend/src/models/ground_truth_data.py
+- [x] T016 [P] TenderData model in backend/src/models/tender_data.py
+- [x] T017 [P] ProcessingResult model in backend/src/models/processing_result.py
+- [x] T018 [P] GroundTruthData model in backend/src/models/ground_truth_data.py
 - [ ] T019 [P] Document processor service in backend/src/services/document_processor.py
 - [ ] T020 [P] LLM extractor service in backend/src/services/llm_extractor.py
 - [ ] T021 [P] Validator service in backend/src/services/validator.py
