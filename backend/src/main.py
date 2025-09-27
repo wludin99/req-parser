@@ -35,9 +35,9 @@ async def health_check():
     """Health check endpoint for monitoring."""
     return {"status": "healthy", "service": "tender-extraction-api"}
 
-# TODO: Import and include API routes when implemented
-# from src.api.routes import router
-# app.include_router(router, prefix="/api/v1")
+# Import and include API routes
+from .api.routes import router
+app.include_router(router)
 
 if __name__ == "__main__":
     uvicorn.run(
