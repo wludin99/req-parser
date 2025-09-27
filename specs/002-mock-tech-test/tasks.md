@@ -42,13 +42,13 @@
 - Paths shown below assume full-stack structure
 
 ## Phase 3.1: Setup
-- [ ] T001 Create project structure per implementation plan
-- [ ] T002 Initialize backend Python project with FastAPI dependencies
-- [ ] T003 Initialize frontend React project with TypeScript dependencies
-- [ ] T004 [P] Configure backend linting and formatting tools (black, flake8)
-- [ ] T005 [P] Configure frontend linting and formatting tools (ESLint, Prettier)
-- [ ] T006 [P] Create configuration files for LLM settings
-- [ ] T007 [P] Set up database schema and migrations
+- [x] T001 Create project structure per implementation plan
+- [x] T002 Initialize backend Python project with FastAPI dependencies
+- [x] T003 Initialize frontend React project with TypeScript dependencies
+- [x] T004 [P] Configure backend linting and formatting tools (black, flake8)
+- [x] T005 [P] Configure frontend linting and formatting tools (ESLint, Prettier)
+- [x] T006 [P] Create configuration files for LLM settings
+- [x] T007 [P] Set up database schema and migrations
 
 ## Phase 3.2: Tests First (TDD) ⚠️ MUST COMPLETE BEFORE 3.3
 **CRITICAL: These tests MUST be written and MUST FAIL before ANY implementation**
