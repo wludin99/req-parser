@@ -1,0 +1,22 @@
+document_processing:
+  supported_formats: ["pdf", "txt"]
+  max_file_size_mb: 10
+  chunking:
+    strategy: "overlap"
+    chunk_size: 1000
+    overlap: 200
+  
+validation:
+  schema_strict: true
+  retry_on_validation_failure: true
+  max_validation_retries: 3
+
+evaluation:
+  ground_truth_required: false
+  accuracy_threshold: 0.8
+  completeness_threshold: 0.9
+
+api:
+  cors_origins: ["http://localhost:3000"]
+  rate_limit_per_minute: 60
+  max_concurrent_requests: 10

@@ -1,0 +1,120 @@
+openapi: 3.0.0
+info:
+  title: TenderInsight Tenders API
+  version: 1.0.0
+  description: API for retrieving tender information
+
+paths:
+  /tenders:
+    get:
+      summary: Get all tenders
+      description: Retrieve a list of all uploaded tenders
+      responses:
+        '200':
+          description: List of tenders
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tenders:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          description: Tender ID
+                        title:
+                          type: string
+                          description: Tender title
+                        deadline:
+                          type: string
+                          description: Tender deadline
+                        budget:
+                          type: string
+                          description: Tender budget
+                        uploaded_at:
+                          type: string
+                          format: date-time
+                          description: Upload timestamp
+                        processing_status:
+                          type: string
+                          enum: [pending, processing, completed, failed]
+                          description: Current processing status
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+
+  /tenders/{tender_id}:
+    get:
+      summary: Get tender details
+      description: Retrieve detailed information for a specific tender
+      parameters:
+        - name: tender_id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Tender ID
+      responses:
+        '200':
+          description: Tender details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: Tender ID
+                  title:
+                    type: string
+                    description: Tender title
+                  deadline:
+                    type: string
+                    description: Tender deadline
+                  budget:
+                    type: string
+                    description: Tender budget
+                  file_url:
+                    type: string
+                    description: Original file path
+                  uploaded_at:
+                    type: string
+                    format: date-time
+                    description: Upload timestamp
+                  processing_status:
+                    type: string
+                    enum: [pending, processing, completed, failed]
+                    description: Current processing status
+                  extraction_metadata:
+                    type: string
+                    description: Additional extraction details
+        '404':
+          description: Tender not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+        '500':
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message

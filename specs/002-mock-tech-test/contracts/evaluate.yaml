@@ -1,0 +1,135 @@
+openapi: 3.0.0
+info:
+  title: Tender Evaluation API
+  version: 1.0.0
+  description: API for evaluating extraction results against ground truth
+
+paths:
+  /evaluate:
+    post:
+      summary: Evaluate extraction results against ground truth
+      description: Compare extracted data with known ground truth and calculate accuracy metrics
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                document_id:
+                  type: string
+                  description: Document identifier
+                extracted_data:
+                  type: object
+                  description: Extracted tender data
+                ground_truth:
+                  type: object
+                  description: Known correct values
+              required:
+                - document_id
+                - extracted_data
+                - ground_truth
+      responses:
+        '200':
+          description: Evaluation completed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  document_id:
+                    type: string
+                    description: Document identifier
+                  overall_accuracy:
+                    type: number
+                    format: float
+                    minimum: 0.0
+                    maximum: 1.0
+                    description: Overall accuracy score
+                  field_accuracy:
+                    type: object
+                    properties:
+                      tender_reference:
+                        type: number
+                        format: float
+                      publication_date:
+                        type: number
+                        format: float
+                      contracting_authority:
+                        type: number
+                        format: float
+                      subject:
+                        type: number
+                        format: float
+                      description:
+                        type: number
+                        format: float
+                      estimated_budget_eur:
+                        type: number
+                        format: float
+                      eligibility_requirements:
+                        type: number
+                        format: float
+                      tender_deadline:
+                        type: number
+                        format: float
+                      contact:
+                        type: number
+                        format: float
+                  completeness:
+                    type: number
+                    format: float
+                    description: Percentage of fields successfully extracted
+                  discrepancies:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        field:
+                          type: string
+                        extracted_value:
+                          type: string
+                        ground_truth_value:
+                          type: string
+                        similarity_score:
+                          type: number
+                          format: float
+                  evaluation_timestamp:
+                    type: string
+                    format: date-time
+        '400':
+          description: Invalid evaluation data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                  details:
+                    type: string
+                    description: Additional error details
+        '404':
+          description: Document not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+        '500':
+          description: Server error during evaluation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                  details:
+                    type: string
+                    description: Additional error details

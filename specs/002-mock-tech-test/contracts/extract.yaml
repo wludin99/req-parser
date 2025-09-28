@@ -1,0 +1,134 @@
+openapi: 3.0.0
+info:
+  title: Tender Extraction API
+  version: 1.0.0
+  description: API for extracting structured data from government tender documents
+
+paths:
+  /extract:
+    post:
+      summary: Extract structured data from tender document
+      description: Process a PDF or text document and extract tender information
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: PDF or text file to process
+                ground_truth:
+                  type: string
+                  description: Optional ground truth data for evaluation
+              required:
+                - file
+      responses:
+        '200':
+          description: Document processed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  document_id:
+                    type: string
+                    description: Unique identifier for the document
+                  processing_status:
+                    type: string
+                    enum: [pending, processing, completed, failed]
+                    description: Current processing status
+                  extracted_data:
+                    type: object
+                    properties:
+                      tender_reference:
+                        type: string
+                      publication_date:
+                        type: string
+                        format: date
+                      contracting_authority:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          address:
+                            type: string
+                      subject:
+                        type: string
+                      description:
+                        type: string
+                      estimated_budget_eur:
+                        type: number
+                        format: float
+                      eligibility_requirements:
+                        type: array
+                        items:
+                          type: string
+                      tender_deadline:
+                        type: string
+                        format: date-time
+                      contact:
+                        type: object
+                        properties:
+                          name:
+                            type: string
+                          email:
+                            type: string
+                            format: email
+                  confidence_score:
+                    type: number
+                    format: float
+                    minimum: 0.0
+                    maximum: 1.0
+                  processing_time:
+                    type: number
+                    format: float
+                  evaluation_metrics:
+                    type: object
+                    properties:
+                      accuracy:
+                        type: number
+                        format: float
+                      completeness:
+                        type: number
+                        format: float
+                      field_accuracy:
+                        type: object
+                        additionalProperties:
+                          type: number
+                          format: float
+        '400':
+          description: Invalid file type or processing error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                  details:
+                    type: string
+                    description: Additional error details
+                  validation_errors:
+                    type: array
+                    items:
+                      type: string
+        '500':
+          description: Server error during processing
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                  details:
+                    type: string
+                    description: Additional error details
+                  retry_count:
+                    type: integer
+                    description: Number of retry attempts made

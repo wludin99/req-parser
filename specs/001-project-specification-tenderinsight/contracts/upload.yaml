@@ -1,0 +1,68 @@
+openapi: 3.0.0
+info:
+  title: TenderInsight Upload API
+  version: 1.0.0
+  description: API for uploading and processing tender documents
+
+paths:
+  /upload:
+    post:
+      summary: Upload tender document for processing
+      description: Upload a PDF or text file and extract tender information
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: PDF or text file to process
+              required:
+                - file
+      responses:
+        '200':
+          description: Document uploaded and processing started
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tender_id:
+                    type: integer
+                    description: ID of the created tender record
+                  status:
+                    type: string
+                    enum: [pending, processing]
+                    description: Current processing status
+                  message:
+                    type: string
+                    description: Status message
+        '400':
+          description: Invalid file type or upload error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                  details:
+                    type: string
+                    description: Additional error details
+        '500':
+          description: Server error during processing
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    description: Error message
+                  details:
+                    type: string
+                    description: Additional error details
